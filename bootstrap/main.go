@@ -2,6 +2,7 @@ package main
 
 import (
 	data_source "QuizApp/data-source"
+	"fmt"
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
@@ -24,6 +25,10 @@ func main() {
 	})
 
 	data_source.GetInstance()
+
+	fileDataName := "sample.json"
+	sampleData := data_source.GetFileData(fileDataName)
+	fmt.Println(sampleData)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

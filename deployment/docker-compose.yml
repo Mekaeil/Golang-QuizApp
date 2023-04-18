@@ -30,7 +30,7 @@ services:
         volumes:
             - ../:/app
         ports:
-            - "3000:1324"
+            - "3000:1323"
         networks:
             - application
  
