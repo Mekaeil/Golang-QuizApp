@@ -1,9 +1,10 @@
 package main
 
 import (
-	data_source "QuizApp/data-source"
-	"fmt"
+	"QuizApp/config/routes"
+	datasource "QuizApp/data-source"
 	"github.com/joho/godotenv"
+	middleware "github.com/labstack/echo/v4/middleware"
 	"log"
 	"net/http"
 
@@ -19,16 +20,27 @@ func init() {
 }
 
 func main() {
-	e := echo.New()
-	e.GET("/", func(c echo.Context) error {
+	app := echo.New()
+	app.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 
-	data_source.GetInstance()
+	datasource.GetInstance()
 
-	fileDataName := "sample.json"
-	sampleData := data_source.GetFileData(fileDataName)
-	fmt.Println(sampleData)
+	/*
+	   |--------------------------------------------------------------------------
+	   | CORS middleware for API endpoint.
+	   |--------------------------------------------------------------------------
+	   |
+	*/
 
-	e.Logger.Fatal(e.Start(":1323"))
+	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST},
+	}))
+
+	// ROUTE VERSION 1
+	routes.DefineApiRouteV1(app)
+
+	app.Logger.Fatal(app.Start(":1323"))
 }

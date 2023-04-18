@@ -44,7 +44,7 @@ help:
 ###################################################################################################
 
 
-INSTALLING_MESSAGE = "🚀🚀 Let's GO! SHOP API application is ready!"
+INSTALLING_MESSAGE = "🚀🚀 Application is ready to GO!"
 WATCH_MESSAGE = "👀👀 Let's watching your changes..."
 
 ## INSTALLING AND RUNNING DOCKER
