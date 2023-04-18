@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+
+    docker-db:
+        image: mysql
+        container_name: docker-db
+        environment:
+            MYSQL_USER: docker
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_PASSWORD: password
+            MYSQL_DATABASE: quiz_app
+        volumes:
+            - ../storage/dbdata:/var/lib/mysql
+        ports:
+            - "3106:3306"
+        networks:
+            - application
+
+    quiz-app:
+        image: golang
+        container_name: quiz-app
+        working_dir: /app
+        command: 'go run bootstrap/main.go &'
+        tty: true
+        stdin_open: true
+        restart: unless-stopped
+        environment:
+            APP_ENV: production
+        volumes:
+            - ../:/app
+        ports:
+            - "3000:1324"
+        networks:
+            - application
+ 
+
+networks:
+    application:
+        name: application
+        driver: bridge

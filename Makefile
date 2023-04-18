@@ -43,6 +43,19 @@ help:
 #########################                  INSTALLING                     #########################
 ###################################################################################################
 
+
+INSTALLING_MESSAGE = "🚀🚀 Let's GO! SHOP API application is ready!"
+WATCH_MESSAGE = "👀👀 Let's watching your changes..."
+
+## INSTALLING AND RUNNING DOCKER
+.PHONY: install
+install:
+	cp .env.example .env
+	cd deployment && docker-compose up -d --force-recreate && docker-compose build --force-rm
+	@echo $(INSTALLING_MESSAGE)
+	exit 0
+
+
 ## RUN THE APPLICATION
 .PHONY: run
 run: 
