@@ -1,2 +1,5 @@
-# MyFirst-Golang-Project
-In this repository I'll try to learn more about Golang :) 
+# Golang QuizApp
+
+Creating QuizApp application with Golang based on best practices and DDD structure. 
+
+
