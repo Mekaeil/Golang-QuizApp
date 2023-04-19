@@ -12,16 +12,18 @@ services:
             MYSQL_DATABASE: quiz_app
         volumes:
             - ../storage/dbdata:/var/lib/mysql
+            - $GOPATH/pkg/mod/cache:/go/pkg/mod/cache
         ports:
             - "3106:3306"
         networks:
             - application
 
     quiz-app:
-        image: golang
+        build:
+            context: .
+            dockerfile: Dockerfile
         container_name: quiz-app
         working_dir: /app
-        command: 'go run bootstrap/main.go &'
         tty: true
         stdin_open: true
         restart: unless-stopped
@@ -35,7 +37,6 @@ services:
             - application
         depends_on:
             - docker-db
- 
 
 networks:
     application:

@@ -61,3 +61,10 @@ install:
 run: 
 	go run bootstrap/main.go 
 	exit 0
+
+## WATCHING
+.PHONY: watch
+watch:
+	docker exec -it quiz-app reflex -r '(\.go)' -s -- sh -c 'go run bootstrap/main.go'
+	exit 0
+
