@@ -15,6 +15,7 @@
 # vendor/
 
 storage/dbdata
+storage/log
 .env
 .idea
 .vscode

@@ -10,6 +10,7 @@ func DefineApiRouteV1(e *echo.Echo) {
 
 	controllers := []config.Controller{
 		controllerV1.LoadingSampleDataController{},
+		controllerV1.QuestionController{},
 	}
 	var routes []config.Route
 	for _, controller := range controllers {

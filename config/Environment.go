@@ -17,3 +17,17 @@ var environments = []Enum{
 func GetEnvironment() []Enum {
 	return environments
 }
+
+const (
+	DAILY Enum = "daily"
+	ALL   Enum = "all"
+)
+
+var logChannels = []Enum{
+	DAILY,
+	ALL,
+}
+
+func GetLogChannels() []Enum {
+	return logChannels
+}
