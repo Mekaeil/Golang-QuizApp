@@ -33,6 +33,8 @@ services:
             - "3000:1323"
         networks:
             - application
+        depends_on:
+            - docker-db
  
 
 networks:
