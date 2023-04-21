@@ -42,10 +42,11 @@ help:
 ###################################################################################################
 #########################                  INSTALLING                     #########################
 ###################################################################################################
-
-
-INSTALLING_MESSAGE = "🚀🚀 Application is ready to GO!"
-WATCH_MESSAGE = "👀👀 Let's watching your changes..."
+APP_DOCKER_NAME = "quiz-app"
+INSTALLING_MESSAGE = "🚀🚀 Application is ready to GO! 🥳🥳 \n"
+CLEAR_CACHE_MESSAGE = "🧹🧹 Let's GO to clear all of caches! 🥳🥳 Now the  🗑️  is empty! 😅😅 \n"
+TEST_MESSAGE = "🧪🧪 Let's GO to test the application! \n"
+WATCH_MESSAGE = "👀👀 Let's watching your changes... \n"
 
 ## INSTALLING AND RUNNING DOCKER
 .PHONY: install
@@ -53,18 +54,40 @@ install:
 	cp .env.example .env
 	cd deployment && docker-compose up -d --force-recreate && docker-compose build --force-rm
 	@echo $(INSTALLING_MESSAGE)
+	make watch
 	exit 0
 
 
-## RUN THE APPLICATION
-.PHONY: run
-run: 
-	go run bootstrap/main.go 
-	exit 0
+## BUILDING THE APPLICATION
+.PHONY: rebuild
+rebuild:
+	make install
 
 ## WATCHING
 .PHONY: watch
 watch:
-	docker exec -it quiz-app reflex -r '(\.go)' -s -- sh -c 'go run bootstrap/main.go'
+	@echo $(WATCH_MESSAGE)
+	docker exec -it $(APP_DOCKER_NAME) reflex -r '(\.go)' -s -- sh -c 'go run bootstrap/main.go'
 	exit 0
 
+
+###################################################################################################
+#########################                USEFUL COMMANDS                  #########################
+###################################################################################################
+
+## Clear Cache
+.PHONY: clean
+clean:
+	docker exec -it $(APP_DOCKER_NAME) go clean
+	docker exec -it $(APP_DOCKER_NAME) go clean -cache
+	docker exec -it $(APP_DOCKER_NAME) go clean -testcache
+	@echo $(CLEAR_CACHE_MESSAGE)
+	exit 0
+
+## RUNNING TESTCASES
+.PHONY: test
+test:
+	@echo $(TEST_MESSAGE)
+	go test ./test/... -v -failfast -shuffle=on -benchmem -coverprofile cover.out
+	@echo "\n"
+	exit 0
